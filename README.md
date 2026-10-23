@@ -1,137 +1,142 @@
+<!-- ZeroLifeDev / Profile README -->
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=35&pause=1000&color=58A6FF&center=true&vCenter=true&width=700&lines=Artificial+Intelligence;Embedded+Systems;Robotics+Research" alt="Typing SVG" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/hero-light.svg" />
+    <img alt="ZeroLifeDev — Artificial Intelligence, Embedded Systems, Robotics" src="./assets/hero-dark.svg" width="100%" />
+  </picture>
 </div>
 
-<div align="center">
-  <b>PYTHON • C++ • ESP32 • PHYSICS</b>
-</div>
+<p align="center">
+  <strong>From software to sensors to things that actually move.</strong><br/>
+  Building experimental systems at the intersection of AI, low-level control, and mechanical engineering.
+</p>
 
-<br />
+<p align="center">
+  <a href="#selected-projects">Projects</a> &nbsp;·&nbsp;
+  <a href="#inside-the-system">Architecture</a> &nbsp;·&nbsp;
+  <a href="#engineering-stack">Stack</a> &nbsp;·&nbsp;
+  <a href="#research-horizon">Research</a>
+</p>
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" title="Primary: AI, Backend, Tools" height="30" />
-  
-  <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" title="Embedded: ESP32 Firmware" height="30" />
+---
 
-  <img src="https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white" title="Microcontroller Logic" height="30" />
-  
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" title="Proficient" height="30" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" title="Proficient" height="30" />
-  
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" title="Learning" height="30" />
-  
+### `01 / ABOUT THE LAB`
+
+I work across multiple layers of a system, from **Python infrastructure** and **C++ firmware** to wireless communication, control algorithms, and mechanical prototypes. I'm especially interested in how intelligence becomes *action*: turning a signal, a model, or a control loop into something physical.
+
+```text
+INTERESTS     AI / VOICE SYSTEMS / EMBEDDED FIRMWARE / ROBOTICS
+HARDWARE      ESP32 / IMUs / MOTOR CONTROL / CUSTOM ELECTRONICS
+WORKFLOW      PROTOTYPE → INSTRUMENT → TEST → ITERATE
+```
+
+<a id="selected-projects"></a>
+### `02 / SELECTED PROJECTS`
+
+<table>
+<tr>
+<td width="50%" valign="top">
+  <h3>📡 Drift Sync</h3>
+  <p><strong>Dual-MCU RC control platform</strong> · <code>IN DEVELOPMENT</code></p>
+  <p>A custom <strong>1:10 RC platform</strong> centered on two ESP32 microcontrollers and <strong>ESP-NOW</strong> communication, with an emphasis on responsive controls and feedback.</p>
+  <ul>
+    <li>Handheld TX with <code>TFT_eSPI</code> dashboard and digital trim</li>
+    <li>RX control for motors, lighting, and fail-safe behavior</li>
+    <li>Live telemetry and yaw-rate stabilization experiments</li>
+  </ul>
+  <p><code>ESP32</code> <code>C++</code> <code>ESP-NOW</code> <code>MPU6050</code> <code>PID</code></p>
+</td>
+<td width="50%" valign="top">
+  <h3>🧠 Clara</h3>
+  <p><strong>Modular voice-AI infrastructure</strong> · <code>IN DEVELOPMENT</code></p>
+  <p>Exploring a Python-based architecture for streaming audio and adaptable AI service integrations.</p>
+  <ul>
+    <li>Modular processing stages</li>
+    <li>Audio streaming and pipeline orchestration</li>
+    <li>Pluggable API integrations</li>
+  </ul>
+  <p><code>Python</code> <code>Streaming Audio</code> <code>APIs</code></p>
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top">
+  <h3>⚙️ Hackintoshify</h3>
+  <p><strong>macOS installer workflow automation</strong> · <code>IN DEVELOPMENT</code></p>
+  <p>A utility aimed at reducing manual steps involved in preparing hardware-specific macOS installation media, including hardware detection, EFI preparation, and legacy/UEFI configuration workflows.</p>
+  <p><code>Systems Automation</code> <code>Hardware Detection</code> <code>Boot Configuration</code></p>
+</td>
+</tr>
+</table>
+
+<a id="inside-the-system"></a>
+### `03 / INSIDE THE SYSTEM`
+
+**Drift Sync: control architecture (prototype design)**
+
+```mermaid
+flowchart LR
+    TX["ESP32 transmitter<br/>Controls + TFT display"] -->|ESP-NOW| RX["ESP32 receiver<br/>Command handling + failsafe"]
+    IMU["MPU6050<br/>Yaw-rate feedback"] --> PID["PID controller<br/>Steering correction"]
+    PID --> RX
+    RX --> ACT["Steering + drive"]
+    RX --> LED["Lighting states"]
+```
+
+<table>
+<tr>
+<td width="50%" valign="top">
+  <p><strong>01. Closed-loop control</strong></p>
+  <p>Exploring <strong>yaw-rate-based drift correction</strong>: measure rotational motion with the MPU6050, compute a PID correction, and blend that correction with steering input.</p>
+  <p><code>SENSING → ESTIMATION → CORRECTION</code></p>
+</td>
+<td width="50%" valign="top">
+  <p><strong>02. Mechanical actuation</strong></p>
+  <p>Experimenting with <strong>miniaturized automotive-inspired suspension geometry</strong> and independent servo-driven ride-height control using four SG90 servos.</p>
+  <p><code>GEOMETRY → ACTUATION → TESTING</code></p>
+</td>
+</tr>
+</table>
+
+<a id="engineering-stack"></a>
+### `04 / ENGINEERING STACK`
+
+**Primary tools and technologies**
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" height="25" />
+  <img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C++" height="25" />
+  <img src="https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white" alt="ESP32" height="25" />
+  <img src="https://img.shields.io/badge/Arduino-00878F?style=flat-square&logo=arduino&logoColor=white" alt="Arduino" height="25" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" height="25" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" height="25" />
+</p>
+
+| Domain | Tools |
+|:--|:--|
+| **AI & software** | Python, streaming pipelines, Jupyter, API integrations |
+| **Firmware & hardware** | C++, Arduino IDE, ESP32, I²C, SPI, ESP-NOW |
+| **Web & services** | JavaScript, TypeScript, HTML/CSS, Firebase |
+| **3D & mechanical** | Blender, CAD workflows, mechanical prototyping |
+| **Development** | Git, GitHub, VS Code, Linux |
+
+<details>
+<summary><b>Other languages and platforms I'm exploring</b></summary>
+<br/>
+C#, Java, Kotlin, Dart, PHP, Shell, PostgreSQL, Autodesk Maya, and 3ds Max.
+</details>
+
+<a id="research-horizon"></a>
+### `05 / RESEARCH HORIZON`
+
+**Artificial consciousness and self-modeling** · `FUTURE INTEREST`
+
+Long-term curiosity about machine awareness, computational models of self-representation, and what it would take to rigorously test claims about conscious systems. **Not an active research project yet.**
+
+---
+
+<p align="center">
+  <sub>Build the prototype. Measure what happens. Make the next version better.</sub>
   <br/>
-  
-  <img src="https://img.shields.io/badge/Shell-121011?style=for-the-badge&logo=gnu-bash&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/Terminal-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white" title="Learning" height="30" />
-  <img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" title="Working Knowledge" height="30" />
-</div>
-
-<hr />
-
-## 🧠 Artificial Intelligence & Software
-
-### 🔹 Clara [INDEV]
-**Voice AI Infrastructure.**
-A proprietary framework for voice processing and data streaming.
-* **Core:** Python, Streaming Audio.
-* **Architecture:** Modular pipeline for complex API integrations.
-
-### 🔹 Hackintoshify [INDEV]
-**Automated Hackintosh Deployment Tool.**
-A utility to automate the creation of macOS USB installers.
-* **Features:** Hardware detection, Image downloading, EFI Injection, Legacy/UEFI patching.
-* **Goal:** Removing manual `config.plist` edits via smart automation.
-
----
-
-## 🏎️ Embedded Systems Architecture
-*Focus: The "Drift Sync" Project (Custom 1:10 RC Platform).*
-
-### 📡 The Hardware Stack
-**Architecture:** Dual-MCU system using **ESP-NOW** (Peer-to-Peer) for low-latency control.
-* **TX Unit (Transmitter):** Custom handheld remote.
-    * `TFT_eSPI` + DMA for flicker-free UI.
-    * Dark-mode dashboard visualizing real-time telemetry.
-    * Digital Trim logic (No potentiometers).
-* **RX Unit (Receiver):**
-    * **Logic:** Controls L298N Motor Drivers, Lighting State Machines, and Failsafe logic.
-    * **Power:** Modular 18650 rails with brownout protection.
-
----
-
-## 🧭 Control Theory & Algorithms
-
-### ⚖️ Advanced Gyro Stabilization
-**Implementation of Commercial-Grade Stability.**
-* **Sensor:** MPU6050 (6-Axis Gyro/Accelerometer).
-* **Algorithm:** Developing PID loops for Yaw-rate drift correction.
-* **Application:** Automated steering compensation during high-speed drifts to maintain angle without user intervention.
-
----
-
-## ⚙️ Mechanical Engineering
-
-### 🔩 1:1 Replica Suspension System
-**High-Fidelity Mechanical Simulation.**
-This is not standard RC suspension. It is a **1:1 scale replica** of a real vehicle's suspension geometry, miniaturized for the chassis.
-* **Type:** Active Air Suspension Simulation.
-* **Actuation:** 4x SG90 Servos (Independent Wheel Control).
-* **Control:** Variable ride height mapped via Potentiometer on the TX.
-* **Physics:** Simulates real-world automotive suspension dynamics, geometry, and load handling.
-
----
-
-## 👁️ Theoretical Research
-
-### Sentience & Self-Awareness
-**Long-term Study.**
-Researching self-awareness and sentient beings with the ultimate goal of recreating a sentient system.
-* **Objective:** Understanding the fundamentals of consciousness in artificial systems.
-* **Status:** Not Started.
-
----
-
-## 🛠️ Tools & Arsenal
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" title="Status: Proficient (Know)" height="30" />
-  
-  <img src="https://img.shields.io/badge/Arduino_IDE-00979D?style=for-the-badge&logo=arduino&logoColor=white" title="Status: Know & Learning" height="30" />
-  
-  <img src="https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=github&logoColor=white" title="Status: Proficient (Know)" height="30" />
-  
-  <img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white" title="Status: Know & Learning" height="30" />
-
-  <br/>
-
-  <img src="https://img.shields.io/badge/Jupyter-F37626.svg?style=for-the-badge&logo=Jupyter&logoColor=white" title="Status: Proficient (Know)" height="30" />
-
-  <img src="https://img.shields.io/badge/Colab-F9AB00.svg?style=for-the-badge&logo=googlecolab&logoColor=white" title="Status: Proficient (Know)" height="30" />
-  
-  <img src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase" title="Status: Know & Learning" height="30" />
-
-  <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" title="Status: Learning" height="30" />
-
-  <br/>
-
-  <img src="https://img.shields.io/badge/blender-%23F5792A.svg?style=for-the-badge&logo=blender&logoColor=white" title="Status: Learning" height="30" />
-
-  <img src="https://img.shields.io/badge/Autodesk%20Maya-0696D7?style=for-the-badge&logo=autodeskmaya&logoColor=white" title="Status: Know a bit & Learning" height="30" />
-
-  <img src="https://img.shields.io/badge/3ds%20Max-0696D7?style=for-the-badge&logo=autodesk&logoColor=white" title="Status: Learning" height="30" />
-</div>
-
-<hr />
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge&color=222" />
-  <img src="https://img.shields.io/badge/Focus-High_Performance-blue?style=for-the-badge&color=222" />
-  <img src="https://img.shields.io/badge/System-Operational-red?style=for-the-badge&color=222" />
-</div>
+  <a href="https://github.com/ZeroLifeDev?tab=repositories"><b>Explore the repositories ↗</b></a>
+</p>
